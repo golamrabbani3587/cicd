@@ -1,18 +1,30 @@
 pipeline {
     agent any
+    
     stages {
-        stage('Build Docker Image') {
+        stage('Checkout SCM') {
             steps {
-                sh "sudo -S docker build -t cicd:v1 ."
-                echo 'Programming123##@'
+                script {
+                    checkout([$class: 'GitSCM',
+                              branches: [[name: '*/master']],
+                              userRemoteConfigs: [[url: 'https://github.com/golamrabbani3587/cicd.git']],
+                              credentialsId: 'GIT_CREDENTIALS_ID'])
+                }
             }
         }
-
+        
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh "docker build -t cicd:v1 ."
+                }
+            }
+        }
+        
         stage('Test Docker Image') {
             steps {
                 script {
-                    sh "sudo -S docker run cicd:v1 npm test"
-                    sh "echo 'Programming123##@'"
+                    sh "docker run cicd:v1 npm test"
                 }
             }
         }
@@ -20,18 +32,13 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    sh "echo 'Programming123#@' | sudo docker login -u golamrabbani3587 --password-stdin"
-                    sh "sudo docker push golamrabbani3587/cicd:v1"
+                    sh "echo 'Programming123#@' | docker login -u golamrabbani3587 --password-stdin"
+                    sh "docker push golamrabbani3587/cicd:v1"
                 }
             }
         }
         
         stage('Deploy') {
-            when {
-                expression {
-                    currentBuild.resultIsBetterOrEqualTo('SUCCESS') && currentBuild.branchName == 'master'
-                }
-            }
             steps {
                 script {
                     sshagent(credentials: ['SSH_PRIVATE_KEY_ID']) {
