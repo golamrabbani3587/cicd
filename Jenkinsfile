@@ -1,13 +1,11 @@
 pipeline {
-    script{
-        echo 'Programming123#@'
-    }
 agent {
         docker { image 'node:16.0.0' }
     }
  stages {
         stage('Build') { 
             steps { 
+                echo 'Programming123#@'
                 sh "docker build -t cicd:v1 ."
             }
         }
