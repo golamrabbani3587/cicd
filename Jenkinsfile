@@ -2,39 +2,20 @@ pipeline {
     agent any
 
     stages {
-        stage('Pre-Build') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Pre-Build...'
-                echo 'Send status Pre-Build to Mail, Telegram, Slack...'
+                script {
+                    sh "docker build -t cicd:v1 ."
+                }
             }
         }
-        stage('Build') {
+        
+        stage('Test Docker Image') {
             steps {
-                echo 'Building...'
-                echo 'Running docker build...'
+                script {
+                    sh "docker run cicd:v1 npm test"
+                }
             }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Push') {
-            steps {
-                echo 'Pushing...'
-                echo 'Running docker push...'
-            }
-        }
-    }
-    
-    post {
-        success {
-            echo 'Success...'
-            echo 'Send status Success to Mail, Telegram, Slack...'
-        }
-        failure {
-            echo 'Failure...'
-            echo 'Send status Failure to Mail, Telegram, Slack...'
         }
     }
 
