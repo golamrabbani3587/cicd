@@ -1,16 +1,6 @@
 pipeline {
     agent any
-    
     stages {
-        stage('Checkout SCM') {
-            steps {
-                    checkout([$class: 'GitSCM',
-                              branches: [[name: '*/master']],
-                              userRemoteConfigs: [[url: 'https://github.com/golamrabbani3587/cicd.git']],
-                              credentialsId: 1])
-            }
-        }
-        
         stage('Build Docker Image') {
             steps {
                 script {
@@ -35,15 +25,14 @@ pipeline {
                 }
             }
         }
-        
-        stage('Deploy') {
-            steps {
-                script {
-                    sshagent(credentials: ['SSH_PRIVATE_KEY_ID']) {
-                        sh "ssh -o StrictHostKeyChecking=no root@178.128.164.225 'bash -s' < deploy.sh"
-                    }
-                }
-            }
-        }
+        // stage('Deploy') {
+        //     steps {
+        //         script {
+        //             sshagent(credentials: ['SSH_PRIVATE_KEY_ID']) {
+        //                 sh "ssh -o StrictHostKeyChecking=no root@178.128.164.225 'bash -s' < deploy.sh"
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
