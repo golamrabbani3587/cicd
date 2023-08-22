@@ -9,7 +9,7 @@ app.get('/bro', (req, res)=>{
     res.send("Hello World");
 })
 
-app.get('/u', (req, res)=>{
+app.get('/uuu', (req, res)=>{
     res.send("Hello World");
 })
 
