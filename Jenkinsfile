@@ -8,7 +8,7 @@ pipeline {
                     checkout([$class: 'GitSCM',
                               branches: [[name: '*/master']],
                               userRemoteConfigs: [[url: 'https://github.com/golamrabbani3587/cicd.git']],
-                              credentialsId: 'GIT_CREDENTIALS_ID'])
+                              credentialsId: 1])
                 }
             }
         }
