@@ -1,11 +1,11 @@
 node {
     stage('Build Docker Image') {
-        sh "sudo -S docker build -t cicd:v1 ."
+        sh "sudo -S docker build -t cicd:v1 .",
         echo 'Programming123##@'
     }
     
     stage('Test Docker Image') {
-        sh "sudo -S docker run cicd:v1 npm test"
+        sh "sudo -S docker run cicd:v1 npm test",
         echo 'Programming123##@'
     }
     
