@@ -10,6 +10,7 @@ pipeline {
             }
         }
         
+        
         stage('Test Docker Image') {
             steps {
                 script {
