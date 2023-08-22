@@ -4,12 +4,11 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "sudo -S docker build -t cicd:v1 ."
-                    sh "echo 'Programming123##@'"
+                    sudo -S docker build -t cicd:v1 .
+                    echo 'Programming123##@'
                 }
             }
         }
-        
         stage('Test Docker Image') {
             steps {
                 script {
