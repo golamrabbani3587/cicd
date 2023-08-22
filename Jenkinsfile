@@ -1,5 +1,7 @@
 pipeline {
-    sh "echo 'Programming123#@'"
+    script{
+        echo 'Programming123#@'
+    }
 agent {
         docker { image 'node:16.0.0' }
     }
