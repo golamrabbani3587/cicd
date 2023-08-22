@@ -1,18 +1,44 @@
 pipeline {
-agent {
-        docker { image 'node:16.0.0' }
-    }
- stages {
-        stage('Build') { 
-            steps { 
-                echo 'Programming123#@'
-                sh "docker build -t cicd:v1 ."
+    agent any
+
+    stages {
+        stage('Pre-Build') {
+            steps {
+                echo 'Pre-Build...'
+                echo 'Send status Pre-Build to Mail, Telegram, Slack...'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                echo 'Running docker build...'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Push') {
+            steps {
+                echo 'Pushing...'
+                echo 'Running docker push...'
             }
         }
     }
+    
+    post {
+        success {
+            echo 'Success...'
+            echo 'Send status Success to Mail, Telegram, Slack...'
+        }
+        failure {
+            echo 'Failure...'
+            echo 'Send status Failure to Mail, Telegram, Slack...'
+        }
+    }
+
 }
-
-
 
 // pipeline {
 //     agent any
