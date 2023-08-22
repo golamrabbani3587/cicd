@@ -4,8 +4,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sudo -S docker build -t cicd:v1 .
-                    echo 'Programming123##@'
+                    sh "docker build -t cicd:v1 ."
                 }
             }
         }
