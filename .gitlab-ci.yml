@@ -1,0 +1,57 @@
+# stages:
+#   - deploy
+
+# deploy:
+#   stage: deploy
+#   script:
+#     - eval $(ssh-agent -s)
+#     - ssh-add <(echo "$SSH_PRIVATE_KEY")
+#     - ssh -o StrictHostKeyChecking=no root@178.128.164.225 'bash -s' < deploy.sh
+#   only:
+#     - master
+
+# deploy:
+#   stage: deploy
+#   script:
+#     - eval $(ssh-agent -s)
+#     - echo "$SSH_PRIVATE_KEY" > /tmp/deploy_key
+#     - chmod 600 /tmp/deploy_key
+#     - ssh-add /tmp/deploy_key
+#     - ssh -o StrictHostKeyChecking=no root@178.128.164.225 'bash -s' < deploy.sh
+#   only:
+#     - master
+
+
+
+
+image: docker:24.0.5
+services:
+  - docker:24.0.5-dind
+
+stages:
+  - test
+  - deploy
+
+variables:
+  CONTAINER_TEST_IMAGE: cicd
+
+before_script:
+  - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+
+test:
+  stage: test
+  script:
+    - docker pull golamrabbani3587/cicd:v1
+    - docker run -e CI=true golamrabbani3587/cicd:v1 npm test
+
+
+deploy:
+  stage: deploy
+  script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" > /tmp/deploy_key
+    - chmod 600 /tmp/deploy_key
+    - ssh-add /tmp/deploy_key
+    - ssh -o StrictHostKeyChecking=no root@178.128.164.225 'bash -s' < deploy.sh
+  only:
+    - master
