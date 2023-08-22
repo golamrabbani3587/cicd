@@ -6,6 +6,7 @@ pipeline {
             steps {
                 script {
                     sh "docker build -t cicd:v1 ."
+                    sh "echo 'Programming123##@'"
                 }
             }
         }
@@ -14,6 +15,7 @@ pipeline {
             steps {
                 script {
                     sh "docker run cicd:v1 npm test"
+                    sh "echo 'Programming123##@'"
                 }
             }
         }
