@@ -22,8 +22,6 @@
 #     - master
 
 
-
-
 image: docker:24.0.5
 services:
   - docker:24.0.5-dind
