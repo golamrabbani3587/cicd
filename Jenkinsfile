@@ -4,12 +4,10 @@ pipeline {
     stages {
         stage('Checkout SCM') {
             steps {
-                script {
                     checkout([$class: 'GitSCM',
                               branches: [[name: '*/master']],
                               userRemoteConfigs: [[url: 'https://github.com/golamrabbani3587/cicd.git']],
                               credentialsId: 1])
-                }
             }
         }
         
