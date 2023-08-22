@@ -4,19 +4,15 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                script {
                     sh "sudo -S docker build -t cicd:v1 ."
                     echo 'Programming123##@'
-                }
             }
         }
         
         stage('Test Docker Image') {
             steps {
-                script {
                     sh "sudo -S docker run cicd:v1 npm test"
                     echo 'Programming123##@'
-                }
             }
         }
     }
