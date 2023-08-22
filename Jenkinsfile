@@ -5,7 +5,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t cicd:v1 ."
+                    sh "sudo docker build -t cicd:v1 ."
                     sh "echo 'Programming123##@'"
                 }
             }
@@ -14,7 +14,7 @@ pipeline {
         stage('Test Docker Image') {
             steps {
                 script {
-                    sh "docker run cicd:v1 npm test"
+                    sh "sudo docker run cicd:v1 npm test"
                     sh "echo 'Programming123##@'"
                 }
             }
