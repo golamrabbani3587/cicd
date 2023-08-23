@@ -4,13 +4,23 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t cicd:v1 ."
+                sh "docker build -t golamrabbani3587/cicd:v1 ."
+                sh "docker run -d --name my-cicd-container golamrabbani3587/cicd:v1"
             }
         }
         
         stage('Test Docker Image') {
             steps {
-                sh "docker run cicd:v1 npm test"
+                sh "sudo docker exec my-cicd-container npm test"
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    sh "echo 'Programming123#@' | docker login -u golamrabbani3587 --password-stdin"
+                    sh "docker push golamrabbani3587/cicd:v1"
+                }
             }
         }
  stage('Deploy') {
@@ -23,7 +33,6 @@ pipeline {
     }
         }
     }
-
 }
 
 // pipeline {
