@@ -14,7 +14,6 @@ WORKDIR /src/app
 COPY package.json /src/app
 RUN npm install
 
-# Bundle app soure
-COPY . /home/app
+COPY . .
 EXPOSE 4441
 CMD [ "node", "index.js" ]
