@@ -10,13 +10,13 @@ pipeline {
 
         stage('Run Docker Image') {
             steps {
-                sh "docker run -d -p 4441:4441 golamrabbani3587/cicd:v1"
+                sh "docker run -d -p 4441:4441 --name my-cicd-container golamrabbani3587/cicd:v1"
             }
         }
         
         stage('Test Docker Image') {
             steps {
-                sh "docker exec cicdcontainer npm test"
+                sh "docker exec name my-cicd-container npm test"
             }
         }
 
