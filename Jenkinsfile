@@ -5,11 +5,16 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh "docker build -t golamrabbani3587/cicd:v1 ."
+            }
+        }
+
+        stage('Run Docker Image') {
+            steps {
                 sh "docker run -d --name my-cicd-container golamrabbani3587/cicd:v1"
             }
         }
         
-        
+
         stage('Test Docker Image') {
             steps {
                 sh "docker exec my-cicd-container npm test"
