@@ -16,7 +16,7 @@ pipeline {
         
         stage('Test Docker Image') {
             steps {
-                sh "docker exec my-cicd-container npm test"
+                sh "docker exec cicdcontainer npm test"
             }
         }
 
