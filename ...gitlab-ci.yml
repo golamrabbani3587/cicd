@@ -42,7 +42,6 @@ test:
     - docker pull golamrabbani3587/cicd:v1
     - docker run -e CI=true golamrabbani3587/cicd:v1 npm test
 
-
 deploy:
   stage: deploy
   script:
