@@ -52,3 +52,5 @@ deploy:
     - ssh -o StrictHostKeyChecking=no root@178.128.164.225 'bash -s' < deploy.sh
   only:
     - master
+
+    
