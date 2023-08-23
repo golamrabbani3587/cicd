@@ -1,23 +1,35 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const chaiAsPromised = require('chai-as-promised');
-const app = require('./index'); // Replace this with the path to your Express app file
 
-// Configure chai
+const app = require('./index'); 
+var chai = require('chai');
+var chaiHttp = require('chai-http');
+
 chai.use(chaiHttp);
-chai.use(chaiAsPromised);
-
 chai.should();
+describe('GET /', function() {
+    it('should return "Hello World"', function(done) {
+        chai
+            .request(app)
+            .get('/')
+            .end(function(error, response, body) {
+                if (error) {
+                    done(error);
+                } else {
+                  response.should.have.status(200);
+                  response.text.should.equal('Hello World');
+                    done();
+                }
+            });
+    });
+});
 
+const Mocha = require('mocha');
+const mocha = new Mocha();
 
-describe('GET /', () => {
-  it('should return "Hello World"', (done) => {
-    chai.request(app)
-      .get('/')
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.text.should.equal('Hello World');
-        done();
-      });
-  });
+mocha.run((failures) => {
+  if (failures === 0) {
+    process.exit(0); 
+  } else {
+    console.error(`${failures} test(s) failed.`);
+    process.exit(1);
+  }
 });
