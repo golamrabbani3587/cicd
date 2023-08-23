@@ -23,7 +23,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    sh "echo 'Programming123#@' | docker login -u golamrabbani3587 --password-stdin"
+                    sh "echo 'Programming123#' | docker login -u golamrabbani3587 --password-stdin"
                     sh "docker push golamrabbani3587/cicd:v1"
                 }
             }
