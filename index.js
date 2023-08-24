@@ -5,10 +5,6 @@ app.get('/', (req, res)=>{
     res.send("Hello World");
 })
 
-app.get('/bro', (req, res)=>{
-    res.send("Hello World");
-})
-
 app.get('/found', (req, res)=>{
     res.send("Hello Worlddd");
 })
