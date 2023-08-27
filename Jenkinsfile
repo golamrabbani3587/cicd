@@ -43,10 +43,14 @@ pipeline {
             steps {
                 script {
                     def containerExists = sh(script: "docker ps -a --filter name=cicdcontainer --format '{{.Names}}'", returnStatus: true)
-                    // def imageExists = sh(script: "docker images -q golamrabbani3587/cicd:v1", returnStatus: true)
+                    def imageExists = sh(script: "docker images -q golamrabbani3587/cicd:v1", returnStatus: true)
+                    println(containerExists, imageExists)
                     if (containerExists == 0) {
                         sh "docker stop cicdcontainer"
                         sh "docker rm cicdcontainer"
+                    }
+                    if (imageExists == 0) {
+                        sh "docker rmi golamrabbani3587/cicd:v1"
                     }
                 }
             }
