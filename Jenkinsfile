@@ -93,7 +93,8 @@ pipeline {
 
                     if (imageExistsStatus == 0) {
                         echo 'Image exists. Removing...'
-                        sh 'docker rmi golamrabbani3587/cicd:v1'
+                        // sh 'docker rmi golamrabbani3587/cicd:v1'
+                        sh """docker rmi -f \$(docker images 'golamrabbani3587/cicd' -a -q)"""
             } else {
                         echo 'Image does not exist.'
                     }
