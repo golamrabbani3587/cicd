@@ -80,10 +80,10 @@ pipeline {
         stage('Check Production Docker Image And Remove If Exist') {
             steps {
                 script {
-                    def containerExistsStatus = sh(script: "docker ps -a --filter name=cicdcontainer --format '{{.Names}}'", returnStatus: true)
-                    def imageExistsStatus = sh(script: 'docker images -q golamrabbani3587/cicd:v1', returnStatus: true)
+                    def containerExistsStatus = sh(script: "docker ps -a --filter name=cicdcontainer --format '{{.Names}}'", returnStatus: true).trim()
+                    def imageExistsStatus = sh(script: 'docker images -q golamrabbani3587/cicd:v1', returnStatus: true).trim()
 
-                    if (containerExistsStatus == true) {
+                    if (containerExistsStatus == '0') {
                         echo 'Container exists. Stopping and removing...'
                         sh 'docker stop cicdcontainer'
                         sh 'docker rm cicdcontainer'
@@ -91,9 +91,8 @@ pipeline {
                         echo 'Container does not exist.'
                     }
 
-                    if (imageExistsStatus == true) {
+                    if (imageExistsStatus == '0') {
                         echo 'Image exists. Removing...'
-                        // sh 'docker rmi golamrabbani3587/cicd:v1'
                         sh """docker rmi -f \$(docker images 'golamrabbani3587/cicd' -a -q)"""
             } else {
                         echo 'Image does not exist.'
