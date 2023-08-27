@@ -20,7 +20,6 @@ pipeline {
                 }
             }
         }
-
         stage('Remove test docker image'){
             steps {
                 script {
@@ -29,7 +28,6 @@ pipeline {
                 }
             }
         }
-
         stage('Check and Stop Existing Container') {
             steps {
                 script {
