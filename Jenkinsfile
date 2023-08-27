@@ -46,17 +46,16 @@ pipeline {
                     def imageExists = sh(script: "docker images -q golamrabbani3587/cicd:v1", returnStatus: true)
                     println containerExists
                     println imageExists
-                    if (containerExists == 0) {
+                    if (containerExists == 1) {
                         sh "docker stop cicdcontainer"
                         sh "docker rm cicdcontainer"
                     }
-                    if (imageExists == 0) {
+                    if (imageExists == 1) {
                         sh "docker rmi golamrabbani3587/cicd:v1"
                     }
                 }
             }
         }
-
         stage('Run Docker Image') {
             steps {
                 sh "docker run -d -p $PROD_PORT:$PROD_PORT --name cicdcontainer --env-file .env golamrabbani3587/cicd:v1"
