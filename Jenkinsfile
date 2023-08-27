@@ -64,7 +64,6 @@ stage('Check Production Docker Image And Remove If Exist') {
             if (containerExistsOutput) {
                 echo "Container exists. Stopping and removing..."
                 sh "docker stop cicdcontainer"
-                sh """docker rmi -f \$(docker images 'golamrabbani3587/cicd:v1' -a -q)"""
             } else {
                 echo "Container does not exist."
             }
