@@ -13,13 +13,22 @@ pipeline {
             }
         }
 
-        stage('Test Docker Image') {
+        stage('Run Test Docker Image') {
             steps {
                 script {
-                    sh "docker run --name cicdcontainer-test -p $TEST_PORT:$TEST_PORT --env-file .env golamrabbani3587/cicd:v1 npm test"
+                    sh "docker run --name cicdcontainer-test -p $TEST_PORT:$TEST_PORT --env-file .env"
                 }
             }
         }
+
+        stage('Test Docker Image') {
+            steps {
+                script {
+                    sh "docker exec cicdcontainer-test npm test"
+                }
+            }
+        }
+
         stage('Remove test docker image'){
             steps {
                 script {
@@ -28,6 +37,7 @@ pipeline {
                 }
             }
         }
+
         stage('Check and Stop Existing Container') {
             steps {
                 script {
