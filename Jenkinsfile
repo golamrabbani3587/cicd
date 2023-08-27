@@ -38,7 +38,6 @@ pipeline {
                 }
             }
         }
-
         stage('Check Production Docker Image And Remove If Exist') {
             steps {
                 script {
