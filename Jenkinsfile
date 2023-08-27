@@ -34,7 +34,7 @@ pipeline {
                 script {
                     sh "docker stop cicdcontainer-test"
                     sh "docker rm cicdcontainer-test"
-                    sh "docker rmi golamrabbani3587/cicd:v1"
+                    sh "rmi $(docker images 'golamrabbani3587/cicd' -a -q)"
                 }
             }
         }
@@ -54,7 +54,7 @@ stage('Check Production Docker Image And Remove If Exist') {
 
             if (imageExistsStatus == 0) {
                 echo "Image exists. Removing..."
-                sh "docker rmi golamrabbani3587/cicd:v1"
+                sh "rmi $(docker images 'golamrabbani3587/cicd' -a -q)"
             } else {
                 echo "Image does not exist."
             }
