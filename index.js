@@ -18,8 +18,8 @@ app.get('/fin-all', (req, res)=>{
 })
 
 
-app.listen(4449,()=>{
-   console.log('port: 4449');
+app.listen(5549,()=>{
+   console.log('port: 5549');
 })
 
 module.exports =  app;
