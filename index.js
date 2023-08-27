@@ -13,6 +13,12 @@ app.get('/fin-al', (req, res)=>{
     res.send("Hello final test Success");
 })
 
+
+app.get('/fin-all', (req, res)=>{
+    res.send("Hello final test Success");
+})
+
+
 app.listen(4441,()=>{
    console.log('port: 4441');
 })
