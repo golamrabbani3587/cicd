@@ -8,7 +8,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t golamrabbani3587/cicd:v1 ."
+                    echo 'Building Test Container....'
+                    sh 'docker build -t golamrabbani3587/cicd:v1 .'
+                    echo 'Test Container Build Success.'
                 }
             }
         }
@@ -16,7 +18,9 @@ pipeline {
         stage('Run Test Docker Image') {
             steps {
                 script {
+                    echo 'Running Test Container....'
                     sh "docker run -d -p $TEST_PORT:$TEST_PORT --name cicdcontainer-test --env-file .env golamrabbani3587/cicd:v1"
+                    echo 'Test Container Running.'
                 }
             }
         }
@@ -24,53 +28,61 @@ pipeline {
         stage('Test Docker Image') {
             steps {
                 script {
-                    sh "docker exec cicdcontainer-test npm test"
+                    echo 'Running Test Cases....'
+                    sh 'docker exec cicdcontainer-test npm test'
                 }
             }
         }
 
-        stage('Remove test docker image'){
+        stage('Remove test docker image') {
             steps {
                 script {
-                    sh "docker stop cicdcontainer-test"
-                    sh "docker rm cicdcontainer-test"
+                    echo 'Removing Test Container And Image....'
+                    sh 'docker stop cicdcontainer-test'
+                    sh 'docker rm cicdcontainer-test'
                     sh """docker rmi \$(docker images 'golamrabbani3587/cicd' -a -q)"""
+                    echo 'Removed Test Container And Image'
                 }
             }
         }
-stage('Check Production Docker Image And Remove If Exist') {
-    steps {
-        script {
-            def containerExistsStatus = sh(script: "docker ps -a --filter name=cicdcontainer --format '{{.Names}}'", returnStatus: true)
-            def imageExistsStatus = sh(script: "docker images -q golamrabbani3587/cicd:v1", returnStatus: true)
+        stage('Check Production Docker Image And Remove If Exist') {
+            steps {
+                script {
+                    echo 'Checking for Existing Production cicdcontainer Container '
+                    def containerExistsStatus = sh(script: "docker ps -a --filter name=cicdcontainer --format '{{.Names}}'", returnStatus: true)
+                    def imageExistsStatus = sh(script: 'docker images -q golamrabbani3587/cicd:v1', returnStatus: true)
 
-            if (containerExistsStatus == true) {
-                echo "Container exists. Stopping and removing..."
-                sh "docker stop cicdcontainer"
-                sh "docker rm cicdcontainer"
+                    if (containerExistsStatus == true) {
+                        echo 'Container exists. Stopping and removing...'
+                        sh 'docker stop cicdcontainer'
+                        sh 'docker rm cicdcontainer'
             } else {
-                echo "Container does not exist."
-            }
-            if (imageExistsStatus == true) {
-                echo "Image exists. Removing..."
-               sh """docker rmi \$(docker images 'golamrabbani3587/cicd' -a -q)"""
+                        echo 'Container does not exist.'
+                    }
+                    if (imageExistsStatus == true) {
+                        echo 'Image exists. Removing...'
+                        sh """docker rmi \$(docker images 'golamrabbani3587/cicd' -a -q)"""
             } else {
-                echo "Image does not exist."
+                        echo 'Image does not exist.'
+                    }
+                }
             }
         }
-    }
-}
         stage('Run Docker Image') {
             steps {
+                echo 'Running Production Container...'
                 sh "docker run -d -p $PROD_PORT:$PROD_PORT --name cicdcontainer --env-file .env golamrabbani3587/cicd:v1"
+                echo 'Successfully Running.'
             }
         }
-        
+
         stage('Push Docker Image') {
             steps {
                 script {
+                    echo 'Pushing golamrabbani3587/cicd:v1 Container to Docker Hub'
                     sh "echo 'Programming123#' | docker login -u golamrabbani3587 --password-stdin"
-                    sh "docker push golamrabbani3587/cicd:v1"
+                    sh 'docker push golamrabbani3587/cicd:v1'
+                    echo 'Push Success'
                 }
             }
         }
