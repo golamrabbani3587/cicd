@@ -78,6 +78,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Run Docker Image') {
             steps {
                 echo '##Running Production Container...'
