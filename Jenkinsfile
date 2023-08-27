@@ -17,6 +17,8 @@ pipeline {
             steps {
                 script {
                     sh "docker run --name cicdcontainer-test -p $TEST_PORT:$TEST_PORT --env-file .env golamrabbani3587/cicd:v1 npm test"
+                    sh "docker stop cicdcontainer-test"
+                    sh "docker rm cicdcontainer-test"
                 }
             }
         }
