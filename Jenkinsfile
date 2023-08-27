@@ -40,7 +40,7 @@ pipeline {
                     echo 'Removing Test Container And Image....'
                     sh 'docker stop cicdcontainer-test'
                     sh 'docker rm cicdcontainer-test'
-                    sh """docker rmi \$(docker images 'golamrabbani3587/cicd' -a -q)"""
+                    sh """docker rmi -f \$(docker images 'golamrabbani3587/cicd' -a -q)"""
                     echo 'Removed Test Container And Image'
                 }
             }
@@ -61,7 +61,7 @@ pipeline {
                     }
                     if (imageExistsStatus == true) {
                         echo 'Image exists. Removing...'
-                        sh """docker rmi \$(docker images 'golamrabbani3587/cicd' -a -q)"""
+                        sh """docker rmi -f \$(docker images 'golamrabbani3587/cicd' -a -q)"""
             } else {
                         echo 'Image does not exist.'
                     }
