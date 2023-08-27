@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     echo '##Running Test Container....'
-                    sh "docker run -d -p $TEST_PORT:$TEST_PORT --name cicdcontainer-test --env-file .env golamrabbani3587/cicd:v1"
+                    sh "docker run -d -p $TEST_PORT:$TEST_PORT --name cicdcontainer-test --env-file .env test-golamrabbani3587/cicd:v1"
                     echo '##Test Container Running.'
                 }
             }
@@ -53,6 +53,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Check Production Docker Image And Remove If Exist') {
             steps {
