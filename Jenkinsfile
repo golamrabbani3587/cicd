@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        TEST_PORT = 4441
-        PROD_PORT = 4448
+        TEST_PORT = 4448
+        PROD_PORT = 4441
     }
     stages {
         stage('Build Docker Image') {
