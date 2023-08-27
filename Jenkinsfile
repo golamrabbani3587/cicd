@@ -64,6 +64,7 @@ stage('Check Production Docker Image And Remove If Exist') {
             if (containerExistsOutput) {
                 echo "Container exists. Stopping and removing..."
                 sh "docker stop cicdcontainer"
+                sh "docker rm cicdcontainer"
             } else {
                 echo "Container does not exist."
             }
