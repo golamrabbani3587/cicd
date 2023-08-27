@@ -59,10 +59,9 @@ pipeline {
             steps {
                 script {
                     // echo '==>Checking for Existing Production cicdcontainer Container '
-                    def containerExistsStatus = sh(script: "docker ps -a --filter name = cicdcontainer --format '{{.Names}}'", returnStatus: true)
+                     def containerExists = sh(script: "docker ps -a --filter name=cicdcontainer --format '{{.Names}}'", returnStatus: true)
                     def imageExistsStatus = sh(script: 'docker images -q golamrabbani3587/cicd:v1', returnStatus: true)
-                    echo containerExistsStatus
-                    if (containerExistsStatus == true) {
+                    if (containerExists == true) {
                         echo '==>Container exists. Stopping and removing...'
                         sh 'docker stop cicdcontainer'
                         sh 'docker rm cicdcontainer'
