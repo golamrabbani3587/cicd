@@ -16,7 +16,7 @@ pipeline {
         stage('Run Test Docker Image') {
             steps {
                 script {
-                    sh "docker run --name cicdcontainer-test -p $TEST_PORT:$TEST_PORT --env-file .env"
+                    sh "docker run -d -p 4448:4448 --name cicdcontainer-test golamrabbani3587/cicd:v1"
                 }
             }
         }
