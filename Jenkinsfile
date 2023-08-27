@@ -54,28 +54,6 @@ pipeline {
             }
         }
 
-        // stage('Check Production Docker Image And Remove If Exist') {
-        //     steps {
-        //         script {
-        //             // echo '==>Checking for Existing Production cicdcontainer Container '
-        //              def containerExists = sh(script: "docker ps -a --filter name=cicdcontainer --format '{{.Names}}'", returnStatus: true)
-        //             def imageExistsStatus = sh(script: 'docker images -q golamrabbani3587/cicd:v1', returnStatus: true)
-        //             if (containerExists == true) {
-        //                 echo '==>Container exists. Stopping and removing...'
-        //                 sh 'docker stop cicdcontainer'
-        //                 sh 'docker rm cicdcontainer'
-        //     } else {
-        //                 echo '==>Container does not exist.'
-        //             }
-        //             if (imageExistsStatus == true) {
-        //                 echo '==>Image exists. Removing...'
-        //                 sh """docker rmi -f \$(docker images 'golamrabbani3587/cicd' -a -q)"""
-        //     } else {
-        //                 echo '==>Image does not exist.'
-        //             }
-        //         }
-        //     }
-        // }
 
 stage('Check Production Docker Image And Remove If Exist') {
     steps {
