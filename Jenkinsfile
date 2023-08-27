@@ -79,7 +79,6 @@ stage('Check Production Docker Image And Remove If Exist') {
     }
 }
 
-
         stage('Run Docker Image') {
             steps {
                 echo '==>Running Production Container...'
