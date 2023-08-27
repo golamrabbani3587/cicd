@@ -77,29 +77,31 @@ pipeline {
         //     }
         // }
 
-        stage('Check Production Docker Image And Remove If Exist') {
-            steps {
-                script {
-                    def containerExistsStatus = sh(script: "docker ps -a --filter name=cicdcontainer --format '{{.Names}}'", returnStatus: true).trim()
-                    def imageExistsStatus = sh(script: 'docker images -q golamrabbani3587/cicd:v1', returnStatus: true).trim()
-
-                    if (containerExistsStatus == '0') {
-                        echo 'Container exists. Stopping and removing...'
-                        sh 'docker stop cicdcontainer'
-                        sh 'docker rm cicdcontainer'
+stage('Check Production Docker Image And Remove If Exist') {
+    steps {
+        script {
+            def containerExistsResult = sh(script: "docker ps -a --filter name=cicdcontainer --format '{{.Names}}'", returnStatus: true)
+            def imageExistsResult = sh(script: 'docker images -q golamrabbani3587/cicd:v1', returnStatus: true)
+            echo containerExistsResult
+            
+            if (containerExistsResult == 0) {
+                echo 'Container exists. Stopping and removing...'
+                sh 'docker stop cicdcontainer'
+                sh 'docker rm cicdcontainer'
             } else {
-                        echo 'Container does not exist.'
-                    }
+                echo 'Container does not exist.'
+            }
 
-                    if (imageExistsStatus == '0') {
-                        echo 'Image exists. Removing...'
-                        sh """docker rmi -f \$(docker images 'golamrabbani3587/cicd' -a -q)"""
+            if (imageExistsResult == 0) {
+                echo 'Image exists. Removing...'
+                sh """docker rmi -f \$(docker images 'golamrabbani3587/cicd' -a -q)"""
             } else {
-                        echo 'Image does not exist.'
-                    }
-                }
+                echo 'Image does not exist.'
             }
         }
+    }
+}
+
 
         stage('Run Docker Image') {
             steps {
