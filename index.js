@@ -9,7 +9,7 @@ app.get('/found', (req, res)=>{
     res.send("Hello Worlddd");
 })
 
-app.get('/final-prev', (req, res)=>{
+app.get('/final-done', (req, res)=>{
     res.send("Hello final test done");
 })
 
