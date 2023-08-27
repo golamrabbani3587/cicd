@@ -44,7 +44,7 @@ pipeline {
                 script {
                     def containerExists = sh(script: "docker ps -a --filter name=cicdcontainer --format '{{.Names}}'", returnStatus: true)
                     def imageExists = sh(script: "docker images -q golamrabbani3587/cicd:v1", returnStatus: true)
-                    if (containerExists == 1) {
+                    if (containerExists == 0) {
                         sh "docker stop cicdcontainer"
                         sh "docker rm cicdcontainer"
                     }
