@@ -59,7 +59,7 @@ pipeline {
             steps {
                 script {
                     echo '##Checking for Existing Production cicdcontainer Container '
-                    def containerExistsStatus = sh(script: "docker ps -a --filter name=cicdcontainer --format '{{.Names}}'", returnStatus: true)
+                    def containerExistsStatus = sh(script: "docker ps -a --filter --name = cicdcontainer --format '{{.Names}}'", returnStatus: true)
                     def imageExistsStatus = sh(script: 'docker images -q golamrabbani3587/cicd:v1', returnStatus: true)
 
                     if (containerExistsStatus == true) {
@@ -78,7 +78,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Run Docker Image') {
             steps {
                 echo '##Running Production Container...'
