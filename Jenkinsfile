@@ -83,7 +83,7 @@ pipeline {
                     def containerExistsStatus = sh(script: "docker ps -a --filter name=cicdcontainer --format '{{.Names}}'", returnStatus: true)
                     def imageExistsStatus = sh(script: 'docker images -q golamrabbani3587/cicd:v1', returnStatus: true)
 
-                    if (containerExistsStatus == 0) {
+                    if (containerExistsStatus == true) {
                         echo 'Container exists. Stopping and removing...'
                         sh 'docker stop cicdcontainer'
                         sh 'docker rm cicdcontainer'
@@ -91,7 +91,7 @@ pipeline {
                         echo 'Container does not exist.'
                     }
 
-                    if (imageExistsStatus == 0) {
+                    if (imageExistsStatus == true) {
                         echo 'Image exists. Removing...'
                         // sh 'docker rmi golamrabbani3587/cicd:v1'
                         sh """docker rmi -f \$(docker images 'golamrabbani3587/cicd' -a -q)"""
