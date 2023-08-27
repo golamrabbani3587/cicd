@@ -49,7 +49,7 @@ pipeline {
                         sh "docker rm cicdcontainer"
                     }
 
-                    if (imageExists == 0) {
+                    if (imageExists == 1) {
                         sh "docker rmi golamrabbani3587/cicd:v1"
                     }
                 }
@@ -72,11 +72,6 @@ pipeline {
         }
     }
 }
-
-
-
-
-
 
 
 
