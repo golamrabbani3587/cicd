@@ -8,27 +8,27 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    echo '##Building Test Container....'
+                    echo '==>Building Test Container....'
                     sh 'docker build -t golamrabbani3587/cicd:v1 .'
-                    echo '##Test Container Build Success.'
+                    echo '==>Test Container Build Success.'
                 }
             }
         }
         stage('Run Tag Docker Image') {
             steps {
                 script {
-                    echo '##Adding Tag Test Container....'
+                    echo '==>Adding Tag Test Container....'
                     sh "docker tag golamrabbani3587/cicd:v1 test-golamrabbani3587/cicd:v1"
-                    echo '##tag AddedTest On Container Running.'
+                    echo '==>tag AddedTest On Container Running.'
                 }
             }
         }
         stage('Run Test Docker Image') {
             steps {
                 script {
-                    echo '##Running Test Container....'
+                    echo '==>Running Test Container....'
                     sh "docker run -d -p $TEST_PORT:$TEST_PORT --name cicdcontainer-test --env-file .env test-golamrabbani3587/cicd:v1"
-                    echo '##Test Container Running.'
+                    echo '==>Test Container Running.'
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
         stage('Test Docker Image') {
             steps {
                 script {
-                    echo '##Running Test Cases....'
+                    echo '==>Running Test Cases....'
                     sh 'docker exec cicdcontainer-test npm test'
                 }
             }
@@ -45,11 +45,11 @@ pipeline {
         stage('Remove test docker image') {
             steps {
                 script {
-                    echo '##Removing Test Container And Image....'
+                    echo '==>Removing Test Container And Image....'
                     sh 'docker stop cicdcontainer-test'
                     sh 'docker rm cicdcontainer-test'
                     sh """docker rmi -f \$(docker images 'test-golamrabbani3587/cicd' -a -q)"""
-                    echo '##Removed Test Container And Image'
+                    echo '==>Removed Test Container And Image'
                 }
             }
         }
@@ -58,22 +58,22 @@ pipeline {
         stage('Check Production Docker Image And Remove If Exist') {
             steps {
                 script {
-                    echo '##Checking for Existing Production cicdcontainer Container '
-                    def containerExistsStatus = sh(script: "docker ps -a --filter --name = cicdcontainer --format '{{.Names}}'", returnStatus: true)
+                    // echo '==>Checking for Existing Production cicdcontainer Container '
+                    def containerExistsStatus = sh(script: "docker ps -a --filter name = cicdcontainer --format '{{.Names}}'", returnStatus: true)
                     def imageExistsStatus = sh(script: 'docker images -q golamrabbani3587/cicd:v1', returnStatus: true)
-
+                    echo containerExistsStatus
                     if (containerExistsStatus == true) {
-                        echo '##Container exists. Stopping and removing...'
+                        echo '==>Container exists. Stopping and removing...'
                         sh 'docker stop cicdcontainer'
                         sh 'docker rm cicdcontainer'
             } else {
-                        echo '##Container does not exist.'
+                        echo '==>Container does not exist.'
                     }
                     if (imageExistsStatus == true) {
-                        echo '##Image exists. Removing...'
+                        echo '==>Image exists. Removing...'
                         sh """docker rmi -f \$(docker images 'golamrabbani3587/cicd' -a -q)"""
             } else {
-                        echo '##Image does not exist.'
+                        echo '==>Image does not exist.'
                     }
                 }
             }
@@ -81,19 +81,19 @@ pipeline {
 
         stage('Run Docker Image') {
             steps {
-                echo '##Running Production Container...'
+                echo '==>Running Production Container...'
                 sh "docker run -d -p $PROD_PORT:$PROD_PORT --name cicdcontainer --env-file .env golamrabbani3587/cicd:v1"
-                echo '##Successfully Running.'
+                echo '==>Successfully Running.'
             }
         }
 
         stage('Push Docker Image') {
             steps {
                 script {
-                    echo '##Pushing golamrabbani3587/cicd:v1 Container to Docker Hub'
+                    echo '==>Pushing golamrabbani3587/cicd:v1 Container to Docker Hub'
                     sh "echo 'Programming123#' | docker login -u golamrabbani3587 --password-stdin"
                     sh 'docker push golamrabbani3587/cicd:v1'
-                    echo '##Push Success'
+                    echo '==>Push Success'
                 }
             }
         }
