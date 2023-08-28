@@ -1,3 +1,5 @@
+require('dotenv')
+
 const express = require('express');
 const app = express()
 
@@ -18,7 +20,7 @@ app.get('/fin-all', (req, res)=>{
 })
 
 
-app.listen(2540,()=>{
-   console.log('port: 2540');
+app.listen(process.env.PROD_PORT,()=>{
+   console.log('process.env.PROD_PORT');
 })
 module.exports =  app;

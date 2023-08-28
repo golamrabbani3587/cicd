@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         TEST_PORT = 4448
-        PROD_PORT = 2540
+        PROD_PORT = 9540
     }
     stages {
         stage('Build Docker Image') {
@@ -19,7 +19,7 @@ pipeline {
                 script {
                     echo '==>Adding Tag Test Container....'
                     sh 'docker tag golamrabbani3587/cicd:v1 test-golamrabbani3587/cicd:v1'
-                    echo '==>tag AddedTest On Container Running.'
+                    echo '==>Tag Added Test Container.'
                 }
             }
         }
@@ -68,7 +68,6 @@ stage('Check Production Docker Image And Remove If Exist') {
             } else {
                 echo "Container does not exist."
             }
-
             if (imageExistsOutput) {
                 echo "Image exists. Removing..."
                 sh """docker rmi -f \$(docker images 'golamrabbani3587/cicd' -a -q)"""
@@ -93,7 +92,6 @@ stage('Check Production Docker Image And Remove If Exist') {
                     echo '==>Pushing golamrabbani3587/cicd:v1 Container to Docker Hub'
                     sh "echo 'Programming123#' | docker login -u golamrabbani3587 --password-stdin"
                     sh 'docker push golamrabbani3587/cicd:v1'
-                    echo '==>Push Success'
                 }
             }
         }
