@@ -78,6 +78,15 @@ stage('Check Production Docker Image And Remove If Exist') {
     }
 }
 
+   stage('Build Docker Image') {
+            steps {
+                echo '==>Building Production Container...'
+                sh 'docker build -t golamrabbani3587/jenkinscicd:v1 .'
+                echo '==>Successfully Build.'
+            }
+        }
+
+
         stage('Run Docker Image') {
             steps {
                 echo '==>Running Production Container...'
