@@ -81,7 +81,7 @@ stage('Check Production Docker Image And Remove If Exist') {
         stage('Run Docker Image') {
             steps {
                 echo '==>Running Production Container...'
-                sh "docker run -d -p $PROD_PORT:$PROD_PORT --name jenkinscicd --env-file .env golamrabbani3587/cicd:v1"
+                sh "docker run -d -p $PROD_PORT:$PROD_PORT --name jenkinscicd --env-file .env golamrabbani3587/jenkinscicd:v1"
                 echo '==>Successfully Running.'
             }
         }
