@@ -15,5 +15,5 @@ COPY package.json /src/app
 RUN npm install
 
 COPY . .
-EXPOSE 5549
+EXPOSE 2540
 CMD [ "node", "index.js" ]
