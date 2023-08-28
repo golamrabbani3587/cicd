@@ -98,7 +98,8 @@ stage('Check Production Docker Image And Remove If Exist') {
         stage('Push Docker Image') {
             steps {
                 script {
-                    echo '==>Pushing golamrabbani3587/cicd:v1 Container to Docker Hub'
+                    echo '==>Pushing golamrabbani3587/jenkinscicd:v1 Container to Docker Hub'
+                    sh 'docker tag l golamrabbani3587/jenkinscicd:v1  golamrabbani3587/jenkinscicd:v1'
                     sh "echo 'Programming123#' | docker login -u golamrabbani3587 --password-stdin"
                     sh 'docker push golamrabbani3587/cicd:v1'
                 }
