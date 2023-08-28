@@ -23,6 +23,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Run Test Docker Image') {
             steps {
                 script {
