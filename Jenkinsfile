@@ -99,7 +99,7 @@ pipeline {
                     echo '==>Pushing golamrabbani3587/jenkinscicd:v1 Container to Docker Hub'
                     sh "echo 'Programming123#' | docker login -u golamrabbani3587 --password-stdin"
                     sh 'docker tag golamrabbani3587/jenkinscicd:v1 golamrabbani3587/jenkinscicd'
-                    sh 'docker -S push golamrabbani3587/jenkinscicd:v1'
+                    sh 'docker push golamrabbani3587/jenkinscicd:v1'
                 }
             }
         }
