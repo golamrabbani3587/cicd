@@ -9,7 +9,7 @@ pipeline {
             steps {
                 script {
                     echo '==>Building Test Container....'
-                    sh 'docker build -t golamrabbani3587/cicd:v1 .'
+                    sh 'docker build -t jenkinscicd .'
                     echo '==>Test Container Build Success.'
                 }
             }
@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     echo '==>Adding Tag Test Container....'
-                    sh 'docker tag golamrabbani3587/cicd:v1 test-golamrabbani3587/cicd:v1'
+                    sh 'docker tag jenkinscicd jenkinscicd:test'
                     echo '==>Tag Added Test Container.'
                 }
             }
@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     echo '==>Running Test Container....'
-                    sh "docker run -d -p $TEST_PORT:$TEST_PORT --name cicdcontainer-test --env-file .env test-golamrabbani3587/cicd:v1"
+                    sh "docker run -d -p $TEST_PORT:$TEST_PORT --name jenkinscicd-test --env-file .env jenkinscicd:test"
                     echo '==>Test Container Running.'
                 }
             }
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     echo '==>Running Test Cases....'
-                    sh 'docker exec cicdcontainer-test npm test'
+                    sh 'docker exec cjenkinscicd-test npm test'
                 }
             }
         }
