@@ -54,38 +54,36 @@ pipeline {
             }
         }
 
+        stage('Check Production Docker Image And Remove If Exist') {
+            steps {
+                script {
+                    def containerExistsOutput = sh(script: "docker ps -a --filter name=jenkinscicd --format '{{.Names}}'", returnStdout: true).trim()
+                    def imageExistsOutput = sh(script: 'docker images -q golamrabbani3587/jenkinscid', returnStdout: true).trim()
 
-stage('Check Production Docker Image And Remove If Exist') {
-    steps {
-        script {
-            def containerExistsOutput = sh(script: "docker ps -a --filter name=jenkinscicd --format '{{.Names}}'", returnStdout: true).trim()
-            def imageExistsOutput = sh(script: "docker images -q golamrabbani3587/jenkinscid", returnStdout: true).trim()
-
-            if (containerExistsOutput) {
-                echo "Container exists. Stopping and removing..."
-                sh "docker stop jenkinscicd"
-                sh "docker rm jenkinscicd"
+                    if (containerExistsOutput) {
+                        echo 'Container exists. Stopping and removing...'
+                        sh 'docker stop jenkinscicd'
+                        sh 'docker rm jenkinscicd'
             } else {
-                echo "Container does not exist."
-            }
-            if (imageExistsOutput) {
-                echo "Image exists. Removing..."
-                sh """docker rmi -f \$(docker images 'golamrabbani3587/jenkinscid' -a -q)"""
+                        echo 'Container does not exist.'
+                    }
+                    if (imageExistsOutput) {
+                        echo 'Image exists. Removing...'
+                        sh """docker rmi -f \$(docker images 'golamrabbani3587/jenkinscid' -a -q)"""
             } else {
-                echo "Image does not exist."
+                        echo 'Image does not exist.'
+                    }
+                }
             }
         }
-    }
-}
 
-   stage('Build Production Docker Image') {
+        stage('Build Production Docker Image') {
             steps {
                 echo '==>Building Production Container...'
                 sh 'docker build -t golamrabbani3587/jenkinscicd:v1 .'
                 echo '==>Successfully Build.'
             }
         }
-
 
         stage('Run Docker Image') {
             steps {
@@ -99,7 +97,7 @@ stage('Check Production Docker Image And Remove If Exist') {
             steps {
                 script {
                     echo '==>Pushing golamrabbani3587/jenkinscicd:v1 Container to Docker Hub'
-                    sh 'docker tag jenkinscicd:v1 golamrabbani3587/jenkinscicd:v1'
+                    sh 'sudo docker tag jenkinscicd:v1 golamrabbani3587/jenkinscicd:v1'
                     sh "echo 'Programming123#' | docker login -u golamrabbani3587 --password-stdin"
                     sh 'docker push golamrabbani3587/cicd:v1'
                 }
