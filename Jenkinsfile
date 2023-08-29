@@ -100,7 +100,6 @@ pipeline {
                     sh "echo 'Programming123#' | docker login -u golamrabbani3587 --password-stdin"
                     sh 'docker tag jenkinscicd:v1 golamrabbani3587/jenkinscicd'
                     sh 'docker -S push golamrabbani3587/jenkinscicd:v1'
-                    
                 }
             }
         }
