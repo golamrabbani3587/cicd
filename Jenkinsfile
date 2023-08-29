@@ -84,7 +84,6 @@ pipeline {
                 echo '==>Successfully Build.'
             }
         }
-
         stage('Run Docker Image') {
             steps {
                 echo '==>Running Production Container...'
@@ -92,7 +91,6 @@ pipeline {
                 echo '==>Successfully Running.'
             }
         }
-
         stage('Push Docker Image') {
             steps {
                 script {
