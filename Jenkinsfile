@@ -97,8 +97,8 @@ pipeline {
             steps {
                 script {
                     echo '==>Pushing golamrabbani3587/jenkinscicd:v1 Container to Docker Hub'
-                    sh 'sudo docker tag jenkinscicd:v1 golamrabbani3587/jenkinscicd:v1'
                     sh "echo 'Programming123#' | docker login -u golamrabbani3587 --password-stdin"
+                    sh 'sudo docker tag jenkinscicd:v1 golamrabbani3587/jenkinscicd:v1'
                     sh 'docker push golamrabbani3587/cicd:v1'
                 }
             }
