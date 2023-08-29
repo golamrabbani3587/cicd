@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     echo '==>Running Test Cases....'
-                    sh 'docker exec cjenkinscicd-test npm test'
+                    sh 'docker exec jenkinscicd-test npm test'
                 }
             }
         }
@@ -46,9 +46,9 @@ pipeline {
             steps {
                 script {
                     echo '==>Removing Test Container And Image....'
-                    sh 'docker stop cicdcontainer-test'
-                    sh 'docker rm cicdcontainer-test'
-                    sh """docker rmi -f \$(docker images 'test-golamrabbani3587/cicd' -a -q)"""
+                    sh 'docker stop jenkinscicd-test'
+                    sh 'docker rm jenkinscicd-test'
+                    sh """docker rmi -f \$(docker images 'jenkinscicd:test' -a -q)"""
                     echo '==>Removed Test Container And Image'
                 }
             }
