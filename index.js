@@ -11,12 +11,16 @@ app.get('/found', (req, res)=>{
     res.send("Hello Worlddd");
 })
 
-app.get('/fin-al', (req, res)=>{
+app.get('/fin-all', (req, res)=>{
     res.send("Hello final test Success");
 })
 
 app.get('/fin-all', (req, res)=>{
     res.send("Hello final test Success");
+})
+
+app.get('/test-final', (req, res)=>{
+    res.send('Ready to test kubernetes')
 })
 
 
