@@ -1,19 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nodejs-deployment
+  name: nodejs-app
+  labels:
+    app: nodejs-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: nodejs
+      app: nodejs-app
   template:
     metadata:
       labels:
-        app: nodejs
+        app: nodejs-app
     spec:
       containers:
-      - name: nodejs
-        image: golamrabbani3587/jenkinscicd:latest
+      - name: nodejs-container
+        image: golamrabbani3587/jenkinscicd:v1
         ports:
         - containerPort: 9540
+        env:
+        - name: PORT
+          value: "9540"
