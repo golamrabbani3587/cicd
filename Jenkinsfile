@@ -103,5 +103,17 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to Kubernetes') {
+            steps {
+            script {
+                echo 'Deploying to Kubernetes...'
+                sh 'kubectl apply -f deployment.yaml'
+                sh 'kubectl apply -f service.yaml'
+                sh 'kubectl apply -f ingress.yaml'
+            }
+        }
+}
+
+
     }
 }
