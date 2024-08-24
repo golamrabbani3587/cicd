@@ -23,7 +23,7 @@ app.get('/test-final', (req, res)=>{
     res.send('Ready to test kubernetes')
 })
 
-app.get('/test-kube-success', (req, res)=>{
+app.get('/test-kube', (req, res)=>{
     res.send('kubernetes running')
 })
 
