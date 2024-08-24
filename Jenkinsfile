@@ -3,7 +3,7 @@ pipeline {
     environment {
         TEST_PORT = 4448
         PROD_PORT = 9540
-         KUBECONFIG = credentials('digitaloceankubectl')
+        KUBECONFIG = credentials('digitaloceankubectl')
     }
     stages {
         stage('Build Docker Image') {
@@ -104,16 +104,18 @@ pipeline {
                 }
             }
         }
+        stages {
         stage('Deploy to Kubernetes') {
             steps {
-            script {
-                echo 'Deploying to Kubernetes...'
-                sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
-                sh 'kubectl apply -f deployment.yaml'
-                sh 'kubectl apply -f service.yaml'
-                sh 'kubectl apply -f ingress.yaml'
+                script {
+                    echo '==>Deploying to DigitalOcean Kubernetes...'
+                    sh 'kubectl apply -f deployment.yaml'
+                    sh 'kubectl apply -f service.yaml'
+                    echo '==>Deployment to Kubernetes successful.'
+                }
             }
         }
-        }
+    }
+
     }
 }

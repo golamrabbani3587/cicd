@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nodejs-app
+  name: nodejs-deployment
 spec:
   replicas: 3
   selector:
@@ -13,10 +13,7 @@ spec:
         app: nodejs
     spec:
       containers:
-      - name: nodejs-container
-        image: your-dockerhub-username/jenkinscicd:latest
+      - name: nodejs
+        image: golamrabbani3587/jenkinscicd:latest
         ports:
         - containerPort: 9540
-        envFrom:
-        - configMapRef:
-            name: app-config
