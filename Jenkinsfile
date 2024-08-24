@@ -3,7 +3,7 @@ pipeline {
     environment {
         TEST_PORT = 4448
         PROD_PORT = 9540
-        KUBECONFIG = credentials('k8s-1-30-2-do-0-sfo2-1724349043648')
+        KUBECONFIG = credentials('do-sfo2-k8s-1-30-2-do-0-sfo2-1724349043648')
     }
     stages {
         stage('Build Docker Image') {
