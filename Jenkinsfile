@@ -107,7 +107,7 @@ pipeline {
             steps {
                 script {
                     echo '==> Deploying to DigitalOcean Kubernetes...'
-                    sh "kubectl apply -f deployment.yaml"
+                    sh "kubectl apply -f deployment.yaml --validate=false"
                     echo '==> Successfully deployed to Kubernetes.'
                 }
             }
