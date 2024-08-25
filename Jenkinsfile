@@ -3,7 +3,7 @@ pipeline {
     environment {
         TEST_PORT = 4448
         PROD_PORT = 9540
-        KUBECONFIG = credentials('cicd-auto-scalling-test')
+        KUBECONFIG = credentials('do-sfo3-cicd-auto-scalling-test')
     }
     stages {
         stage('Build Docker Image') {
