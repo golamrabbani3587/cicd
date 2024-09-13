@@ -3,7 +3,6 @@ pipeline {
     environment {
         TEST_PORT = 4448
         PROD_PORT = 9540
-        KUBECONFIG = credentials('do-sfo3-cicd-auto-scalling-test')
     }
     stages {
         stage('Build Docker Image') {
@@ -103,17 +102,5 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    echo '==>Deploying to DigitalOcean Kubernetes...'
-                    sh 'kubectl apply -f deployment.yaml'
-                    sh 'kubectl apply -f service.yaml'
-                    echo '==>Deployment to Kubernetes successful.'
-                }
-            }
-        }
-
     }
 }

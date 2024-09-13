@@ -1,18 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nodejs-ingress
+  name: jenkinscicd-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
-  - host: your-app-domain.com
+  - host: your_domain.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: nodejs-service
+            name: jenkinscicd-service
             port:
               number: 80
+  tls:
+  - hosts:
+    - your_domain.com
+    secretName: your-tls-secret

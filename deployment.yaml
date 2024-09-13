@@ -1,24 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nodejs-app
+  name: jenkinscicd-deployment
   labels:
-    app: nodejs-app
+    app: jenkinscicd
 spec:
-  replicas: 3
+  replicas: 2 # Initial number of replicas
   selector:
     matchLabels:
-      app: nodejs-app
+      app: jenkinscicd
   template:
     metadata:
       labels:
-        app: nodejs-app
+        app: jenkinscicd
     spec:
       containers:
-      - name: nodejs-container
+      - name: jenkinscicd
         image: golamrabbani3587/jenkinscicd:v1
         ports:
         - containerPort: 9540
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
         env:
-        - name: PORT
-          value: "9540"
+        - name: NODE_ENV
+          value: "production"
